@@ -1,8 +1,8 @@
 # Based on ubuntu 16.04 image
-FROM ubuntu:16.04
+# FROM ubuntu:16.04
 
 # Based on debian stable image
-# FROM debian:stretch-slim
+FROM debian:stretch-slim
 
 # Based on alpine
 # FROM alpine:3.6
