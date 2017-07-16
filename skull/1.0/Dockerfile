@@ -53,7 +53,7 @@ RUN deps='git autoconf libprotobuf-c0-dev protobuf-c-compiler' \
     && apt-get purge -y --auto-remove $deps
 
 # Setup environment variables
-# ENV key value
+ENV SKULL_VERSION 1.0.0
 
 VOLUME /workspace
 WORKDIR /workspace
