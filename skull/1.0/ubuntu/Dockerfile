@@ -1,12 +1,6 @@
 # Based on ubuntu 16.04 image
 FROM ubuntu:16.04
 
-# Based on debian stable image
-# FROM debian:stretch-slim
-
-# Based on alpine
-# FROM alpine:3.6
-
 # Install all the dependencies
 RUN set -ex \
     && apt-get update && apt-get install -y --no-install-recommends \
@@ -38,9 +32,8 @@ RUN deps='git autoconf libprotobuf-c0-dev protobuf-c-compiler' \
     # Install temp building tool-chains
     && apt-get update && apt-get install -y --no-install-recommends $deps \
     && rm -rf /var/lib/apt/lists/* \
-    # Clone latest master
-    #&& mkdir /build \
-    && git clone git://github.com/finaldie/skull.git /build --recursive \
+    # Clone 1.0 tag
+    && git clone --single-branch --branch 1.0 --depth 1 --recursive git://github.com/finaldie/skull.git /build \
     # Build and Install
     && make -C /build dep \
     && make -C /build install-dep \
@@ -53,7 +46,8 @@ RUN deps='git autoconf libprotobuf-c0-dev protobuf-c-compiler' \
     && apt-get purge -y --auto-remove $deps
 
 # Setup environment variables
-# ENV key value
+ENV SKULL_VERSION 1.0.0
+ENV SKULL_GITSHA1 8dbbbb32d523f5bd86ae582bc8f98aca245f4bf1
 
 VOLUME /workspace
 WORKDIR /workspace
