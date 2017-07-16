@@ -2,7 +2,7 @@
 # FROM ubuntu:16.04
 
 # Based on debian stable image
-FROM debian:stretch-slim
+FROM debian:jessie-slim
 
 # Based on alpine
 # FROM alpine:3.6
@@ -39,8 +39,7 @@ RUN deps='git autoconf libprotobuf-c0-dev protobuf-c-compiler' \
     && apt-get update && apt-get install -y --no-install-recommends $deps \
     && rm -rf /var/lib/apt/lists/* \
     # Clone latest master
-    #&& mkdir /build \
-    && git clone git://github.com/finaldie/skull.git /build --recursive \
+    && git clone --single-branch --branch 1.0 --depth 1 --recursive git://github.com/finaldie/skull.git /build \
     # Build and Install
     && make -C /build dep \
     && make -C /build install-dep \
