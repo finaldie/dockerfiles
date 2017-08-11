@@ -5,7 +5,7 @@ FROM ubuntu:16.04
 RUN set -ex \
     && apt-get update && apt-get install -y --no-install-recommends \
         psmisc \
-        #netcat-openbsd \
+        netcat-openbsd \
         net-tools \
         vim \
         make \
