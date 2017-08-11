@@ -5,7 +5,8 @@ FROM debian:jessie-slim
 RUN set -ex \
     && apt-get update && apt-get install -y --no-install-recommends \
         psmisc \
-        netcat-openbsd \
+        #netcat-openbsd \
+        netstat \
         vim \
         make \
         gcc \
