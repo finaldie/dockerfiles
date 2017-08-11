@@ -42,7 +42,7 @@ RUN set -ex \
     && git clone --single-branch --branch 1.1 --depth 1 --recursive git://github.com/finaldie/skull.git /build \
     # Build and Install
     && make -C /build FLIB_CFLAGS=-DFLIB_SKIP_LEGACY disable_jemalloc=true \
-    && sed -i 's/127.0.0.1 $port/127.0.0.1 -p $port/g' /build/tests/common/mock.ep \
+    && sed -i 's/127.0.0.1 $port/127.0.0.1 -p $port/g' /build/tests/common/mock_ep \
     && make -C /build install \
     # Verification
     && make -C /build check skip=dns_svc verbose=true \
