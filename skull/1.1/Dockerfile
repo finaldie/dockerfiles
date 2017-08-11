@@ -7,6 +7,7 @@ RUN set -ex \
         psmisc \
         netcat-openbsd \
         net-tools \
+        libc-ares-dev \
         vim \
         make \
         gcc \
