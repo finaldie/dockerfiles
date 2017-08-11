@@ -6,7 +6,7 @@ RUN set -ex \
     && apt-get update && apt-get install -y --no-install-recommends \
         psmisc \
         #netcat-openbsd \
-        netstat \
+        net-tools \
         vim \
         make \
         gcc \
