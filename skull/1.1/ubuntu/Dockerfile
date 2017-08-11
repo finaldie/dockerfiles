@@ -1,54 +1,47 @@
-# Based on alpine
-FROM alpine:3.6
-
-# Notes: Some packages are very big, like:
-#  - vim: 25 MB
-#  - gcc: 60+ MB
-#  - g++: 60+ MB
-#  - valgrind: 90+ MB
+# Based on ubuntu 16.04 image
+FROM ubuntu:16.04
 
 # Install all the dependencies
 RUN set -ex \
-    && apk add --no-cache \
-        bash \
-        coreutils \
+    && apt-get update && apt-get install -y --no-install-recommends \
+        psmisc \
+        netcat-openbsd \
         vim \
         make \
-        linux-headers \
         gcc \
         g++ \
         gdb \
-        musl-dev \
         valgrind \
         expect \
-        yaml-dev \
-        python2-dev \
-        py2-pip \
-        protobuf-c-dev \
-        protobuf-dev \
+        libyaml-dev \
+        python-dev \
+        python-pip \
+        libprotobuf-dev \
+        protobuf-compiler \
+    && rm -rf /var/lib/apt/lists/* \
     && pip install --upgrade setuptools pip \
     && pip install \
         PyYAML \
-        protobuf \
+        protobuf==2.6.1 \
         pympler \
         WebOb
 
 # Build and Install Skull
-RUN set -ex \
+RUN deps='git autoconf libprotobuf-c0-dev protobuf-c-compiler' \
+    && set -ex \
     # Install temp building tool-chains
-    && apk add --no-cache --virtual .build-deps \
-        git \
+    && apt-get update && apt-get install -y --no-install-recommends $deps \
+    && rm -rf /var/lib/apt/lists/* \
     # Clone branch 1.1
     && git clone --single-branch --branch 1.1 --depth 1 --recursive git://github.com/finaldie/skull.git /build \
     # Build and Install
-    && make -C /build FLIB_CFLAGS=-DFLIB_SKIP_LEGACY disable_jemalloc=true \
-    && sed -i 's/127.0.0.1 $port/127.0.0.1 -p $port/g' /build/tests/common/mock_ep \
+    && make -C /build \
     && make -C /build install \
     # Verification
-    && make -C /build check skip=dns_svc verbose=true \
+    && make -C /build check verbose=true \
     # Cleanup
     && rm -rf /build \
-    && apk del .build-deps
+    && apt-get purge -y --auto-remove $deps
 
 # Setup environment variables
 ENV SKULL_VERSION 1.1
