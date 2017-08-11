@@ -1,5 +1,5 @@
 # Based on debian stable image
-FROM debian:jessie-slim
+FROM debian:jessie
 
 # Install all the dependencies
 RUN set -ex \
