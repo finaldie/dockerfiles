@@ -42,6 +42,7 @@ RUN set -ex \
     && git clone --single-branch --branch 1.1 --depth 1 --recursive git://github.com/finaldie/skull.git /build \
     # Build and Install
     && make -C /build FLIB_CFLAGS=-DFLIB_SKIP_LEGACY disable_jemalloc=true \
+    # Hack mock_ep here
     && sed -i 's/127.0.0.1 $port/127.0.0.1 -p $port/g' /build/tests/common/mock_ep \
     && make -C /build install \
     # Verification
@@ -52,7 +53,7 @@ RUN set -ex \
 
 # Setup environment variables
 ENV SKULL_VERSION 1.1
-ENV SKULL_GITSHA1 9414527e75b4cdf2dce83f8905058d04ddd529b1
+ENV SKULL_GITSHA1 d2e574a969480c88197a82cd8fe824ea6e2c6bed
 
 VOLUME /workspace
 WORKDIR /workspace
