@@ -1,9 +1,16 @@
 # Based on alpine
 FROM alpine:3.6
 
+# Notes: Some packages are very big, like:
+#  - vim: 25 MB
+#  - gcc: 60+ MB
+#  - g++: 60+ MB
+#  - valgrind: 90+ MB
+
 # Install all the dependencies
 RUN set -ex \
     && apk add --no-cache \
+        bash \
         coreutils \
         vim \
         make \
@@ -11,11 +18,13 @@ RUN set -ex \
         gcc \
         g++ \
         gdb \
+        musl-dev \
         valgrind \
         expect \
         yaml-dev \
         python2-dev \
         py2-pip \
+        protobuf-c-dev \
         protobuf-dev \
     && pip install --upgrade setuptools pip \
     && pip install \
@@ -29,25 +38,21 @@ RUN set -ex \
     # Install temp building tool-chains
     && apk add --no-cache --virtual .build-deps \
         git \
-        autoconf \
-        musl-dev \
-        protobuf-c-dev \
     # Clone tag 1.0
-    && git clone --single-branch --branch 1.0 --depth 1 --recursive git://github.com/finaldie/skull.git /build \
+    && git clone --single-branch --branch 1.1 --depth 1 --recursive git://github.com/finaldie/skull.git /build \
     # Build and Install
-    && make -C /build dep \
-    && make -C /build install-dep \
-    && make -C /build \
+    && make -C /build FLIB_CFLAGS=-DFLIB_SKIP_LEGACY disable_jemalloc=true \
+    && sed -i 's/127.0.0.1 $port/127.0.0.1 -p $port/g' /build/tests/common/mock.ep \
     && make -C /build install \
     # Verification
-    && make -C /build check case=basic,py_basic debug=true \
+    && make -C /build check skip=dns_svc verbose=true \
     # Cleanup
     && rm -rf /build \
     && apk del .build-deps
 
 # Setup environment variables
-ENV SKULL_VERSION 1.0.0
-ENV SKULL_GITSHA1 8dbbbb32d523f5bd86ae582bc8f98aca245f4bf1
+ENV SKULL_VERSION 1.1.1
+ENV SKULL_GITSHA1 0db5f1f4952a53e1510180999d13786c4e07ea5f
 
 VOLUME /workspace
 WORKDIR /workspace
