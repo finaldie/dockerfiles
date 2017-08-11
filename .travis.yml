@@ -2,6 +2,8 @@ language: bash
 services: docker
 
 env:
+  - PROJECT=skull VERSION=1.1 VARIANT=
+  - PROJECT=skull VERSION=1.1 VARIANT=ubuntu
   - PROJECT=skull VERSION=1.1 VARIANT=alpine
 
 install:
