@@ -40,14 +40,14 @@ RUN deps='git autoconf libprotobuf-c0-dev protobuf-c-compiler' \
     && make -C /build \
     && make -C /build install \
     # Verification
-    && make -C /build check case=basic,py_basic verbose=true \
+    && make -C /build check verbose=true \
     # Cleanup
     && rm -rf /build \
     && apt-get purge -y --auto-remove $deps
 
 # Setup environment variables
 ENV SKULL_VERSION 1.1
-ENV SKULL_GITSHA1 d2e574a969480c88197a82cd8fe824ea6e2c6bed
+ENV SKULL_GITSHA1 aed0905c79f4837746158e3a4388339977be179c
 
 VOLUME /workspace
 WORKDIR /workspace
