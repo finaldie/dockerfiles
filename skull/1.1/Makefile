@@ -12,19 +12,19 @@ update_sha1:
 	find . -name "Dockerfile" | xargs sed -i 's/SKULL_GITSHA1 .*/SKULL_GITSHA1 $(sha1)/g'
 
 debian-build:
-	docker build -t $(prefix)-$@ -f ./Dockerfile.build
+	docker build -t $(prefix)-$@ . -f ./Dockerfile.build
 
 debian: debian-build
 	docker build -t $(prefix)-$@ .
 
 ubuntu-build:
-	cd $@ && docker build -t $(prefix)-$@ -f ./Dockerfile.build
+	cd $@ && docker build -t $(prefix)-$@ . -f ./Dockerfile.build
 
 ubuntu: ubuntu-build
 	cd $@ && docker build -t $(prefix)-$@ .
 
 alpine-build:
-	cd $@ && docker build -t $(prefix)-$@ -f ./Dockerfile.build
+	cd $@ && docker build -t $(prefix)-$@ . -f ./Dockerfile.build
 
 alpine: alpine-build
 	cd $@ && docker build -t $(prefix)-$@ .
