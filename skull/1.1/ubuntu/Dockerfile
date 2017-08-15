@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 
 # Install all the dependencies
 RUN set -ex; \
-    dep=' \
+    deps=' \
         git \
         autoconf \
         libprotobuf-c0-dev \
