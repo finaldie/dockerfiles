@@ -9,13 +9,13 @@ tag ?= test
 all: debian ubuntu alpine
 
 update_sha1:
-	find . -name "Dockerfile" | xargs sed -i 's/SKULL_GITSHA1 .*/SKULL_GITSHA1 $(sha1)/g'
+	find . -name "Dockerfile" -o -name "Dockerfile.build" | xargs sed -i 's/SKULL_GITSHA1 .*/SKULL_GITSHA1 $(sha1)/g'
 
 debian-build:
-	docker build -t $(prefix)-$@ . -f ./Dockerfile.build
+	docker build -t $(prefix)-build . -f ./Dockerfile.build
 
 debian: debian-build
-	docker build -t $(prefix)-$@ .
+	docker build -t $(prefix) .
 
 ubuntu-build:
 	cd ubuntu && docker build -t $(prefix)-$@ . -f ./Dockerfile.build

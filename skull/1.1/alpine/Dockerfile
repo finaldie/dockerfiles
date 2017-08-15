@@ -9,51 +9,46 @@ FROM alpine:3.6
 
 # Install all the dependencies
 RUN set -ex \
-    && apk add --no-cache \
-        bash \
+    && apk add --no-cache --virtual .build-deps \
+        git \
         coreutils \
-        vim \
         make \
         linux-headers \
         gcc \
         g++ \
-        gdb \
         musl-dev \
-        valgrind \
-        expect \
-        yaml-dev \
-        python2-dev \
         py2-pip \
         protobuf-c-dev \
+        expect \
+    && apk add --no-cache \
+        bash \
+        yaml-dev \
+        python2-dev \
         protobuf-dev \
     && pip install --upgrade setuptools pip \
     && pip install \
         PyYAML \
         protobuf \
         pympler \
-        WebOb
-
-# Build and Install Skull
-RUN set -ex \
-    # Install temp building tool-chains
-    && apk add --no-cache --virtual .build-deps \
-        git \
-    # Clone branch 1.1
+        WebOb \
+    # Build and Install Skull
+    #  Clone branch 1.1
     && git clone --single-branch --branch 1.1 --depth 1 --recursive git://github.com/finaldie/skull.git /build \
-    # Build and Install
+    #  Build and Install
     && make -C /build FLIB_CFLAGS=-DFLIB_SKIP_LEGACY disable_jemalloc=true \
-    # Hack mock_ep here
+    #  Hack mock_ep here
     && sed -i 's/127.0.0.1 $port/127.0.0.1 -p $port/g' /build/tests/common/mock_ep \
     && make -C /build install \
-    # Verification
-    && make -C /build check skip=dns_svc verbose=true \
+    #  Verification
+    && make -C /build check case=basic,py_basic verbose=true \
+    && ldd -r `which skull-engine` \
     # Cleanup
     && rm -rf /build \
     && apk del .build-deps
 
 # Setup environment variables
 ENV SKULL_VERSION 1.1
-ENV SKULL_GITSHA1 a630b92c44195255c765646aa25f0df592aac413
+ENV SKULL_GITSHA1 90680082b166a3ffc160646f98d98f80d17fb4a6
 
 VOLUME /workspace
 WORKDIR /workspace

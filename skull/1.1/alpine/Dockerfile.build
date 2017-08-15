@@ -1,49 +1,55 @@
-# Based on debian stable image
-FROM debian:jessie-slim
+# Based on alpine
+FROM alpine:3.6
+
+# Notes: Some packages are very big, like:
+#  - vim: 25 MB
+#  - gcc: 60+ MB
+#  - g++: 60+ MB
+#  - valgrind: 90+ MB
 
 # Install all the dependencies
 RUN set -ex \
-    && apt-get update && apt-get install -y --no-install-recommends \
-        psmisc \
-        netcat-openbsd \
-        net-tools \
-        libc-ares-dev \
+    && apk add --no-cache \
+        bash \
+        coreutils \
         vim \
         make \
+        linux-headers \
         gcc \
         g++ \
         gdb \
+        musl-dev \
         valgrind \
         expect \
-        libyaml-dev \
-        python-dev \
-        python-pip \
-        libprotobuf-dev \
-        protobuf-compiler \
-    && rm -rf /var/lib/apt/lists/* \
+        yaml-dev \
+        python2-dev \
+        py2-pip \
+        protobuf-c-dev \
+        protobuf-dev \
     && pip install --upgrade setuptools pip \
     && pip install \
         PyYAML \
-        protobuf==2.6.1 \
+        protobuf \
         pympler \
         WebOb
 
 # Build and Install Skull
-RUN deps='git autoconf libprotobuf-c0-dev protobuf-c-compiler' \
-    && set -ex \
+RUN set -ex \
     # Install temp building tool-chains
-    && apt-get update && apt-get install -y --no-install-recommends $deps \
-    && rm -rf /var/lib/apt/lists/* \
+    && apk add --no-cache --virtual .build-deps \
+        git \
     # Clone branch 1.1
     && git clone --single-branch --branch 1.1 --depth 1 --recursive git://github.com/finaldie/skull.git /build \
     # Build and Install
-    && make -C /build \
+    && make -C /build FLIB_CFLAGS=-DFLIB_SKIP_LEGACY disable_jemalloc=true \
+    # Hack mock_ep here
+    && sed -i 's/127.0.0.1 $port/127.0.0.1 -p $port/g' /build/tests/common/mock_ep \
     && make -C /build install \
     # Verification
-    && make -C /build check case=basic,py_basic verbose=true \
+    && make -C /build check skip=dns_svc verbose=true \
     # Cleanup
     && rm -rf /build \
-    && apt-get purge -y --auto-remove $deps
+    && apk del .build-deps
 
 # Setup environment variables
 ENV SKULL_VERSION 1.1
