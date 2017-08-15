@@ -2,8 +2,8 @@
 FROM ubuntu:16.04
 
 # Install all the dependencies
-RUN set -ex \
-    && dep=' \
+RUN set -ex; \
+    dep=' \
         git \
         autoconf \
         libprotobuf-c0-dev \
@@ -14,14 +14,13 @@ RUN set -ex \
         libc6-dev \
         python-dev \
         python-pip \
-    '\
-    && apt-get update && apt-get install -y --no-install-recommends \
+    ';\
+    apt-get update && apt-get install -y --no-install-recommends \
         $deps \
         # The following packages are still needed after clean up
         libyaml-dev \
         libprotobuf-dev \
         protobuf-compiler \
-    && rm -rf /var/lib/apt/lists/* \
     && pip install --upgrade setuptools pip \
     && pip install \
         PyYAML \

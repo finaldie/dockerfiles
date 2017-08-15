@@ -20,6 +20,7 @@ RUN set -ex \
         py2-pip \
         protobuf-c-dev \
         expect \
+        valgrind \
     && apk add --no-cache \
         bash \
         yaml-dev \
