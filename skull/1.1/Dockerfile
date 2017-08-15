@@ -10,8 +10,8 @@ RUN set -ex; \
         protobuf-c-compiler \
         make \
         gcc \
-        libc6-dev \
         g++ \
+        libc6-dev \
         python-dev \
         python-pip \
     '; \
@@ -33,7 +33,7 @@ RUN set -ex; \
     #  Build and Install
     && make -C /build \
     && make -C /build install \
-    # Verfication
+    #  Verfication
     && ldd -r `which skull-engine` \
     # Cleanup
     && rm -rf /build \
