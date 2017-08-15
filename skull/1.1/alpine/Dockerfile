@@ -42,7 +42,7 @@ RUN set -ex \
     && make -C /build install \
     #  Verification
     && make -C /build check case=basic,py_basic verbose=true \
-    && ldd -r `which skull-engine` \
+    && ldd `which skull-engine` \
     # Cleanup
     && rm -rf /build \
     && apk del .build-deps
