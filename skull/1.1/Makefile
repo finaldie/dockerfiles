@@ -18,16 +18,16 @@ debian: debian-build
 	docker build -t $(prefix)-$@ .
 
 ubuntu-build:
-	cd $@ && docker build -t $(prefix)-$@ . -f ./Dockerfile.build
+	cd ubuntu && docker build -t $(prefix)-$@ . -f ./Dockerfile.build
 
 ubuntu: ubuntu-build
-	cd $@ && docker build -t $(prefix)-$@ .
+	cd ubuntu && docker build -t $(prefix)-$@ .
 
 alpine-build:
-	cd $@ && docker build -t $(prefix)-$@ . -f ./Dockerfile.build
+	cd alpine && docker build -t $(prefix)-$@ . -f ./Dockerfile.build
 
 alpine: alpine-build
-	cd $@ && docker build -t $(prefix)-$@ .
+	cd alpine && docker build -t $(prefix)-$@ .
 
 push:
 	docker push $(prefix)-debian-build
