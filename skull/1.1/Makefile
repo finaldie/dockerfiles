@@ -30,8 +30,8 @@ alpine: alpine-build
 	cd alpine && docker build -t $(prefix)-$@ .
 
 push:
-	docker push $(prefix)-debian-build
-	docker push $(prefix)-debian
+	docker push $(prefix)-build
+	docker push $(prefix)
 	docker push $(prefix)-ubuntu-build
 	docker push $(prefix)-ubuntu
 	docker push $(prefix)-alpine-build
