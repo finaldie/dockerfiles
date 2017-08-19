@@ -37,11 +37,21 @@ push:
 	docker push $(prefix)-alpine-build
 	docker push $(prefix)-alpine
 
+clean:
+	docker image rm $(prefix)-build
+	docker image rm $(prefix)
+	docker image rm $(prefix)-ubuntu-build
+	docker image rm $(prefix)-ubuntu
+	docker image rm $(prefix)-alpine-build
+	docker image rm $(prefix)-alpine
+
 help:
 	@echo "Usage:"
 	@echo " - make"
 	@echo " - make update_sha1 sha1=abcd..."
 	@echo " - make push tag_name"
 
-.PHONY: all update_sha1 debian-build debian ubuntu-build ubuntu alpine-build alpine
+.PHONY: all update_sha1
+.PHONY: debian-build debian ubuntu-build ubuntu alpine-build alpine
+.PHONY: push clean help
 
