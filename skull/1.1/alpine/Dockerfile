@@ -49,11 +49,11 @@ RUN set -ex \
 
 # Setup environment variables
 ENV SKULL_VERSION 1.1
-ENV SKULL_GITSHA1 83ee23fe52cc732269c26c2cb1d2612848d7a16a
+ENV SKULL_GITSHA1 215a15906f6ca41bf5410441ba33e4d0c7aaba78
 
 VOLUME /workspace
 WORKDIR /workspace
 
 # Entrypoint
-CMD ["/bin/bash"]
+CMD ["skull", "start", "--std-forwarding"]
 
