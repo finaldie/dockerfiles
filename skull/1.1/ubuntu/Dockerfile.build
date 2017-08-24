@@ -53,6 +53,5 @@ VOLUME /workspace
 WORKDIR /workspace
 
 # Entrypoint
-ENTRYPOINT ["skull", "build", "clean"]
-CMD ["build", "deploy"]
+CMD ["skull", "build", "clean", "build", "deploy"]
 
