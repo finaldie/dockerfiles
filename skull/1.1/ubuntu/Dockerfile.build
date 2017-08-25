@@ -47,11 +47,11 @@ RUN deps='git autoconf libprotobuf-c0-dev protobuf-c-compiler' \
 
 # Setup environment variables
 ENV SKULL_VERSION 1.1
-ENV SKULL_GITSHA1 215a15906f6ca41bf5410441ba33e4d0c7aaba78
+ENV SKULL_GITSHA1 49af99569cb05e75d34c5493076922516b504f92
 
 VOLUME /workspace
 WORKDIR /workspace
 
 # Entrypoint
-CMD ["skull", "build", "clean", "build", "deploy"]
+CMD ["/bin/bash"]
 
