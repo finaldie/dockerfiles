@@ -20,6 +20,10 @@ RUN set -ex \
         python-pip \
         libprotobuf-dev \
         protobuf-compiler \
+        git \
+        autoconf \
+        libprotobuf-c0-dev \
+        protobuf-c-compiler \
     && rm -rf /var/lib/apt/lists/* \
     && pip install --upgrade setuptools pip \
     && pip install \
@@ -29,11 +33,8 @@ RUN set -ex \
         WebOb
 
 # Build and Install Skull
-RUN deps='git autoconf libprotobuf-c0-dev protobuf-c-compiler' \
-    && set -ex \
+RUN set -ex \
     # Install temp building tool-chains
-    && apt-get update && apt-get install -y --no-install-recommends $deps \
-    && rm -rf /var/lib/apt/lists/* \
     # Clone branch 1.1
     && git clone --single-branch --branch 1.1 --depth 1 --recursive git://github.com/finaldie/skull.git /build \
     # Build and Install
@@ -42,8 +43,7 @@ RUN deps='git autoconf libprotobuf-c0-dev protobuf-c-compiler' \
     # Verification
     && make -C /build check case=basic,py_basic verbose=true \
     # Cleanup
-    && rm -rf /build \
-    && apt-get purge -y --auto-remove $deps
+    && rm -rf /build
 
 # Setup environment variables
 ENV SKULL_VERSION 1.1
