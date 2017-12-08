@@ -46,7 +46,7 @@ RUN set -ex \
 
 # Setup environment variables
 ENV SKULL_VERSION 1.1
-ENV SKULL_GITSHA1 49af99569cb05e75d34c5493076922516b504f92
+ENV SKULL_GITSHA1 eebda06b82a373d27fb3193daf01d7aece4fbbf2
 
 VOLUME /workspace
 WORKDIR /workspace
