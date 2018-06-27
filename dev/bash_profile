@@ -1,5 +1,0 @@
-#!/bin/bash
-
-if [ -f /build/user_env/all.bashrc ]; then
-    . /build/user_env/all.bashrc
-fi
