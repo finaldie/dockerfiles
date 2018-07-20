@@ -14,7 +14,7 @@ update_sha1:
 debian-rt:
 	docker build -t $(prefix) .
 
-debian-build:
+debian-build: debian-rt
 	docker build -t $(prefix)-build . -f ./Dockerfile.build
 
 debian: debian-build
