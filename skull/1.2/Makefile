@@ -6,34 +6,28 @@ prefix = $(repo):$(version)
 sha1 ?=
 tag ?= test
 
-all: debian ubuntu alpine
+all: debian-build ubuntu-build alpine-build
 
 update_sha1:
 	find . -name "Dockerfile" -o -name "Dockerfile.build" | xargs sed -i 's/SKULL_GITSHA1 .*/SKULL_GITSHA1 $(sha1)/g'
 
-debian-rt:
+debian:
 	docker build -t $(prefix) .
 
-debian-build: debian-rt
+debian-build: debian
 	docker build -t $(prefix)-build . -f ./Dockerfile.build
 
-debian: debian-build
-
-ubuntu-rt:
+ubuntu:
 	cd ubuntu && docker build -t $(prefix)-$@ .
 
-ubuntu-build: ubuntu-rt
+ubuntu-build: ubuntu
 	cd ubuntu && docker build -t $(prefix)-$@ . -f ./Dockerfile.build
 
-ubuntu: ubuntu-build
-
-alpine-rt:
+alpine:
 	cd alpine && docker build -t $(prefix)-$@ .
 
-alpine-build: alpine-rt
+alpine-build: alpine
 	cd alpine && docker build -t $(prefix)-$@ . -f ./Dockerfile.build
-
-alpine: alpine-build
 
 push:
 	docker push $(prefix)-build
@@ -58,8 +52,8 @@ help:
 	@echo " - make push tag_name"
 
 .PHONY: all update_sha1
-.PHONY: debian-rt debian-build debian
-.PHONY: ubuntu-rt ubuntu-build ubuntu
-.PHONY: alpine-rt alpine-build alpine
+.PHONY: debian-build debian
+.PHONY: ubuntu-build ubuntu
+.PHONY: alpine-build alpine
 .PHONY: push clean help
 
