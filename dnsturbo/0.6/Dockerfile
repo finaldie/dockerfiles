@@ -13,6 +13,8 @@ RUN set -ex \
     && git clone --single-branch --branch master --depth 1 --recursive git://github.com/finaldie/DNSTurbo.git /building \
     && skull build \
     && skull deploy \
+    # Public command port
+    && sed -i 's/# command_bind:.*/command_bind: 0.0.0.0/g' run/skull-config.yaml \
     && rm -rf /var/lib/apt/lists/*
 
 # Runable Image
