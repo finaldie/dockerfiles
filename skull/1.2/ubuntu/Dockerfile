@@ -39,8 +39,8 @@ RUN set -ex; \
     && ldd -r `which skull-engine` \
     && pip3 list \
     && ls -l /usr/local/lib | grep proto \
-    && ldd -r /usr/local/lib/libskullpy-api.so \
-    && ldd -r /usr/local/lib/libskullcpp-api.so \
+    && ldd -r /usr/local/lib/libskull-api-py.so \
+    && ldd -r /usr/local/lib/libskull-api-cpp.so \
     && ldd -r /usr/local/lib/libskull-unittest-cpp.so \
     && ldd -r /usr/local/lib/libskull-unittest-c.so \
     # Cleanup
