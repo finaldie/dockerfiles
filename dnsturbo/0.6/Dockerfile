@@ -1,0 +1,44 @@
+# Build DNSTurbo
+FROM finaldie/skull:1.2-build as builder
+
+WORKDIR /building
+
+RUN set -ex \
+    && buildDeps=' \
+        git \
+        libc-ares-dev \
+    ' \
+    && apt-get update && apt-get install -y --no-install-recommends \
+        $buildDeps \
+    && git clone --single-branch --branch master --depth 1 --recursive git://github.com/finaldie/DNSTurbo.git /building \
+    && skull build \
+    && skull deploy \
+    && rm -rf /var/lib/apt/lists/*
+
+# Runable Image
+FROM finaldie/skull:1.2
+
+RUN set -ex; \
+    buildDeps=' \
+        python3-pip \
+        python3-setuptools \
+        python3-wheel \
+    ' \
+    && apt-get update && apt-get install -y --no-install-recommends \
+        $buildDeps \
+        libc-ares-dev \
+    && pip3 install \
+        dnslib \
+    && apt-get purge -y --auto-remove $buildDeps \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
+COPY --from=builder /building/run .
+
+EXPOSE 53 7759
+
+ENV DNSTURBO 0.6.1
+
+# Entrypoint
+CMD ["skull", "start", "--std-forwarding"]
+
