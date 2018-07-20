@@ -1,0 +1,56 @@
+# Based on skull:1.2-alpine
+FROM finaldie/skull:1.2-alpine
+
+# Notes: Some packages are very big, like:
+#  - vim: 25 MB
+#  - gcc: 60+ MB
+#  - g++: 60+ MB
+#  - valgrind: 90+ MB
+
+# Install all the dependencies
+RUN set -ex \
+    && apk add --no-cache \
+        coreutils \
+        make \
+        autoconf \
+        automake \
+        libtool \
+        linux-headers \
+        gcc \
+        g++ \
+        musl-dev \
+        expect \
+        valgrind \
+        file \
+        # Above should be exactly the same as Dockerfile
+        python3-dev \
+        tree \
+        netcat-openbsd
+
+# Build and Install Skull
+RUN set -ex \
+    # Install temp building tool-chains
+    && apk add --no-cache --virtual .build-deps \
+        git \
+    # Clone branch 1.1
+    && git clone --single-branch --branch 1.2 --depth 1 --recursive git://github.com/finaldie/skull.git /build \
+    # Hack mock_ep here
+    && sed -i 's/127.0.0.1 $port/127.0.0.1 -p $port/g' /build/tests/common/mock_ep \
+    # Verification
+    && make -C /build check skip=dns_svc verbose=true \
+    # Cleanup
+    && rm -rf /build \
+    && apk del .build-deps
+
+# Setup environment variables
+ENV SKULL_VERSION 1.2
+ENV SKULL_GITSHA1 d1130bedf3166977a1fee4f9829e1af3263c50f6
+
+VOLUME /workspace
+WORKDIR /workspace
+
+EXPOSE 7758 7759
+
+# Entrypoint
+CMD ["/bin/bash"]
+
