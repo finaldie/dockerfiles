@@ -1,7 +1,7 @@
 FROM finaldie/skull:1.2-build
 
-WORKDIR /workspace
-VOLUME /workspace
+WORKDIR /build
+VOLUME /build
 
 RUN set -ex \
     && buildDeps=' \
