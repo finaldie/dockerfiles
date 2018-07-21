@@ -36,8 +36,8 @@ RUN set -ex \
     && ldd -r `which skull-engine` \
     && pip3 list \
     && make -C /build check case=basic,py_basic verbose=true \
-    # Cleanup (Nothing so far)
-    && true
+    # Cleanup
+    && rm -rf /build
 
 # Setup environment variables
 ENV SKULL_VERSION 1.2
