@@ -1,7 +1,7 @@
 # Build DNSTurbo
 FROM finaldie/skull:1.2-build as builder
 
-WORKDIR /building
+WORKDIR /build
 
 RUN set -ex \
     && buildDeps=' \
@@ -10,7 +10,7 @@ RUN set -ex \
     ' \
     && apt-get update && apt-get install -y --no-install-recommends \
         $buildDeps \
-    && git clone --single-branch --branch master --depth 1 --recursive git://github.com/finaldie/DNSTurbo.git /building \
+    && git clone --single-branch --branch master --depth 1 --recursive git://github.com/finaldie/DNSTurbo.git /build \
     && skull build \
     && skull deploy \
     # Public command port
@@ -35,7 +35,7 @@ RUN set -ex; \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /workspace
-COPY --from=builder /building/run .
+COPY --from=builder /build/run .
 
 EXPOSE 53 7759
 
