@@ -39,7 +39,7 @@ COPY --from=builder /build/run .
 
 EXPOSE 53 7759
 
-ENV DNSTURBO 0.6.1
+ENV DNSTURBO 0.6.2
 
 # Entrypoint
 CMD ["skull", "start", "--std-forwarding"]
