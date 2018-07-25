@@ -21,6 +21,8 @@ RUN set -ex; \
         $deps \
         # The following packages are still needed after clean up
         libyaml-dev \
+        procps \
+        binutils \
     #&& pip3 install --upgrade --user setuptools pip \
     && pip3 install \
         PyYAML \
