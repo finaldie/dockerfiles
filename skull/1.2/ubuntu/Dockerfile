@@ -31,9 +31,9 @@ RUN set -ex; \
     #  Clone branch 1.2
     && git clone --single-branch --branch 1.2 --depth 1 --recursive git://github.com/finaldie/skull.git /build \
     #  Build and Install
-    && make -C /build dep -j4 \
+    && make -C /build dep -j8 \
     && make -C /build install-dep \
-    && make -C /build -j4 \
+    && make -C /build -j8 \
     && make -C /build install \
     #  Verfication
     && ldd -r `which skull-engine` \
@@ -52,7 +52,7 @@ RUN set -ex; \
 
 # Setup environment variables
 ENV SKULL_VERSION 1.2
-ENV SKULL_GITSHA1 53dda77e04af191f7fe8c2a6c18e23523e913d19
+ENV SKULL_GITSHA1 a3edadc898526ef1b720dfef8c65e549c2abcae0
 
 VOLUME /workspace
 WORKDIR /workspace

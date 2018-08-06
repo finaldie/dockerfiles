@@ -1,7 +1,7 @@
 FROM finaldie/skull:1.2-build
 
-WORKDIR /build
-VOLUME /build
+WORKDIR /workspace
+VOLUME /workspace
 
 RUN set -ex \
     && buildDeps=' \
@@ -14,10 +14,12 @@ RUN set -ex \
     && pip3 install \
         dnslib \
     && git clone --single-branch --branch 0.7 --depth 1 --recursive git://github.com/finaldie/DNSTurbo.git /build \
+    && cd /build \
     && skull build \
     # Verification
     && skull build ft-check \
     # Clean up
+    && cd / \
     && rm -rf /build \
     && rm -rf /var/lib/apt/lists/*
 

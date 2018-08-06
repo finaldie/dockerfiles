@@ -35,11 +35,11 @@ RUN set -ex \
     #  Clone branch 1.2
     && git clone --single-branch --branch 1.2 --depth 1 --recursive git://github.com/finaldie/skull.git /build \
     #  Build and Install
-    && make -C /build dep -j4 disable_jemalloc=true \
+    && make -C /build dep -j8 disable_jemalloc=true \
     && make -C /build install-dep \
     #   - Notes: On alpine, link with jemalloc would cause segment fault, diable
     #            it for now until have a better solution
-    && make -C /build -j4 disable_jemalloc=true \
+    && make -C /build -j8 disable_jemalloc=true \
     && make -C /build install \
     #  Hack mock_ep here
     && sed -i 's/127.0.0.1 $port/127.0.0.1 -p $port/g' /build/tests/common/mock_ep \
@@ -53,7 +53,7 @@ RUN set -ex \
 
 # Setup environment variables
 ENV SKULL_VERSION 1.2
-ENV SKULL_GITSHA1 53dda77e04af191f7fe8c2a6c18e23523e913d19
+ENV SKULL_GITSHA1 a3edadc898526ef1b720dfef8c65e549c2abcae0
 
 VOLUME /workspace
 WORKDIR /workspace
