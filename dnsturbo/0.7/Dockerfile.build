@@ -25,7 +25,7 @@ RUN set -ex \
 
 EXPOSE 53 7759
 
-ENV DNSTURBO 0.7.1
+ENV DNSTURBO 0.7.2
 
 # Entrypoint
 CMD ["/bin/bash"]
