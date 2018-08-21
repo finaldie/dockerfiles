@@ -1,5 +1,5 @@
 # Build DNSTurbo
-FROM finaldie/skull:1.2-build as builder
+FROM finaldie/skull:1.3-build as builder
 
 WORKDIR /build
 
@@ -18,7 +18,7 @@ RUN set -ex \
     && rm -rf /var/lib/apt/lists/*
 
 # Runable Image
-FROM finaldie/skull:1.2
+FROM finaldie/skull:1.3
 
 RUN set -ex; \
     buildDeps=' \
@@ -39,7 +39,7 @@ COPY --from=builder /build/run .
 
 EXPOSE 53 7759
 
-ENV DNSTURBO 0.7.2
+ENV DNSTURBO 0.7.3
 
 # Entrypoint
 CMD ["skull", "start", "--std-forwarding"]
