@@ -2,9 +2,9 @@ language: bash
 services: docker
 
 env:
-  - PROJECT=skull VERSION=1.2 VARIANT=
-  - PROJECT=skull VERSION=1.2 VARIANT=ubuntu
-  - PROJECT=skull VERSION=1.2 VARIANT=alpine
+  - PROJECT=skull VERSION=1.3 VARIANT=
+  - PROJECT=skull VERSION=1.3 VARIANT=ubuntu
+  - PROJECT=skull VERSION=1.3 VARIANT=alpine
 
 install:
   - git clone https://github.com/docker-library/official-images.git ~/official-images
