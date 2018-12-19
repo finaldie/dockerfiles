@@ -30,6 +30,7 @@ RUN set -ex \
         valgrind \
         expect \
         tree \
+        less \
     && rm -rf /var/lib/apt/lists/*
 
 # Build and Install Skull
