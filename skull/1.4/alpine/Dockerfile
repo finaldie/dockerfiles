@@ -40,7 +40,7 @@ RUN set -ex \
     && make -C /build install-dep \
     #   - Notes: On alpine, link with jemalloc would cause segment fault, diable
     #            it for now until have a better solution
-    && make -C /build -j8 disable_jemalloc=true \
+    && make -C /build -j8 disable_jemalloc=true CFLAGS+=-DSK_MEM_NO_BACKTRACE \
     && make -C /build install \
     #  Hack mock_ep here
     && sed -i 's/127.0.0.1 $port/127.0.0.1 -p $port/g' /build/tests/common/mock_ep \
@@ -54,7 +54,7 @@ RUN set -ex \
 
 # Setup environment variables
 ENV SKULL_VERSION 1.4
-ENV SKULL_GITSHA1 7e24f2c4d1d2a865286f540c7dca5f4377504883
+ENV SKULL_GITSHA1 9e94fc34c8570ac417091b811318d5aa247c1486
 
 VOLUME /workspace
 WORKDIR /workspace
