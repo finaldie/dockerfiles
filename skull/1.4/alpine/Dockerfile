@@ -17,6 +17,7 @@ RUN set -ex \
         automake \
         libtool \
         linux-headers \
+        libexecinfo-dev \
         gcc \
         g++ \
         musl-dev \
