@@ -5,32 +5,32 @@ Dockerfiles for _skull_, _DNSTurbo_, etc...
 
 # Skull Dockerfiles
 ## Supported tags and respective `Dockerfile` links
-* 1.1 ([Dockerfile][3])
-* 1.1-build ([Dockerfile][4])
-* 1.1-ubuntu ([Dockerfile][5])
-* 1.1-ubuntu-build ([Dockerfile][6])
-* 1.1-alpine ([Dockerfile][7])
-* 1.1-alpine-build ([Dockerfile][8])
+* 1.4 ([Dockerfile][10])
+* 1.4-build ([Dockerfile][11])
+* 1.4-ubuntu ([Dockerfile][12])
+* 1.4-ubuntu-build ([Dockerfile][13])
+* 1.4-alpine ([Dockerfile][14])
+* 1.4-alpine-build ([Dockerfile][15])
 
 ## Repo Name
 `finaldie/skull`
 
 ## Pull Images
 ```console
-docker pull finaldie/skull:1.1
-docker pull finaldie/skull:1.1-build
+docker pull finaldie/skull:1.4
+docker pull finaldie/skull:1.4-build
 ```
 
 # DNSTurbo Dockerfiles
 ## Supported tags and respective `Dockerfile` links
-* 0.5 ([Dockerfile][9])
+* 0.8 ([Dockerfile][16])
 
 ## Repo Name
 `finaldie/dnsturbo`
 
 ## Pull Images
 ```console
-docker pull finaldie/dnsturbo:0.5
+docker pull finaldie/dnsturbo:0.8
 ```
 
 
@@ -45,4 +45,14 @@ docker pull finaldie/dnsturbo:0.5
 [8]: https://github.com/finaldie/dockerfiles/blob/master/skull/1.1/alpine/Dockerfile.build
 
 [9]: https://github.com/finaldie/dockerfiles/blob/master/dnsturbo/0.5/Dockerfile
+
+[10]: https://github.com/finaldie/dockerfiles/blob/master/skull/1.1/Dockerfile
+[11]: https://github.com/finaldie/dockerfiles/blob/master/skull/1.1/Dockerfile.build
+[12]: https://github.com/finaldie/dockerfiles/blob/master/skull/1.1/ubuntu/Dockerfile
+[13]: https://github.com/finaldie/dockerfiles/blob/master/skull/1.1/ubuntu/Dockerfile.build
+[14]: https://github.com/finaldie/dockerfiles/blob/master/skull/1.1/alpine/Dockerfile
+[15]: https://github.com/finaldie/dockerfiles/blob/master/skull/1.1/alpine/Dockerfile.build
+
+[16]: https://github.com/finaldie/dockerfiles/blob/master/dnsturbo/0.5/Dockerfile
+
 
