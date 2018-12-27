@@ -27,6 +27,8 @@ RUN set -ex \
         libc-ares-dev \
         vim \
         gdb \
+        # bear is for generating compile_commands.json
+        bear \
         valgrind \
         expect \
         tree \
