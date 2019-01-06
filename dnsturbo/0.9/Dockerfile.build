@@ -1,0 +1,32 @@
+FROM finaldie/skull:1.5-build
+
+ENV DNSTURBO 0.9
+
+WORKDIR /workspace
+VOLUME /workspace
+
+RUN set -ex \
+    && buildDeps=' \
+        git \
+        dnsutils \
+        libc-ares-dev \
+    ' \
+    && apt-get update && apt-get install -y --no-install-recommends \
+        $buildDeps \
+    && pip3 install \
+        dnslib \
+    && git clone --single-branch --branch ${DNSTURBO} --depth 1 --recursive git://github.com/finaldie/DNSTurbo.git /build \
+    && cd /build \
+    && skull build \
+    # Verification
+    && skull build ft-check \
+    # Clean up
+    && cd / \
+    && rm -rf /build \
+    && rm -rf /var/lib/apt/lists/*
+
+EXPOSE 53 7759
+
+# Entrypoint
+CMD ["/bin/bash"]
+
